@@ -432,6 +432,7 @@ class _MessengerState extends State<Messenger> {
   String newText = "";
   TextEditingController textController = TextEditingController();
   ScrollController scrollController = ScrollController();
+  bool canBeExited = true;
   @override
   void initState() {
     super.initState();
@@ -467,7 +468,9 @@ class _MessengerState extends State<Messenger> {
             Text("Messenger App"),
             TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  if (canBeExited == true && mounted) {
+                    Navigator.pop(context);
+                  }
                 },
                 child: Text("Return to home.")),
             Expanded(
@@ -514,6 +517,7 @@ class _MessengerState extends State<Messenger> {
             ),
             TextButton(
                 onPressed: () {
+                  canBeExited = false;
                   int x = rnd.nextInt(3);
                   convo.add([newText, true]);
                   textController.clear();
@@ -532,6 +536,7 @@ class _MessengerState extends State<Messenger> {
                         convo.add([longerTexts[rnd.nextInt(140)], false]);
                         scrollToBottom(userInteraction);
                         setState(() {});
+                        canBeExited = true;
                       });
                     });
                   } else if (x == 1) {
@@ -547,6 +552,7 @@ class _MessengerState extends State<Messenger> {
                         convo.add([questions[rnd.nextInt(87)], false]);
                         scrollToBottom(userInteraction);
                         setState(() {});
+                        canBeExited = true;
                       });
                     });
                   } else {
@@ -568,6 +574,7 @@ class _MessengerState extends State<Messenger> {
                           convo.add([questions[rnd.nextInt(87)], false]);
                           scrollToBottom(userInteraction);
                           setState(() {});
+                          canBeExited = true;
                         });
                       });
                     });
