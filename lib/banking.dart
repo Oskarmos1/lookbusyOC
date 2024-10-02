@@ -14,12 +14,12 @@ class _BankingState extends State<Banking> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Text("Banking App"),
+            const Text("Banking App"),
             TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text("Return to home."))
+                child: const Text("Return to home."))
           ],
         ),
       ),

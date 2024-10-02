@@ -14,16 +14,15 @@ class _PhoneState extends State<Phone> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Text("Phone App"),
+            const Text("Phone App"),
             TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text("Return to home."))
+                child: const Text("Return to home."))
           ],
         ),
       ),
     );
-    ;
   }
 }

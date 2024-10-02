@@ -14,16 +14,15 @@ class _MailState extends State<Mail> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Text("Mail App"),
+            const Text("Mail App"),
             TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text("Return to home."))
+                child: const Text("Return to home."))
           ],
         ),
       ),
     );
-    ;
   }
 }

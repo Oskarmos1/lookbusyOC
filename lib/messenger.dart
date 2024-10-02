@@ -444,7 +444,7 @@ class _MessengerState extends State<Messenger> {
   void dispose() {
     textController.dispose();
     scrollController.dispose();
-    Timer.periodic(Duration(seconds: 1), (timer) {});
+    Timer.periodic(const Duration(seconds: 1), (timer) {});
     super.dispose();
   }
 
@@ -453,7 +453,7 @@ class _MessengerState extends State<Messenger> {
     if (userInteraction == false) {
       scrollController.animateTo(
         scrollController.position.maxScrollExtent,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     }
@@ -465,14 +465,14 @@ class _MessengerState extends State<Messenger> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Text("Messenger App"),
+            const Text("Messenger App"),
             TextButton(
                 onPressed: () {
                   if (canBeExited == true && mounted) {
                     Navigator.pop(context);
                   }
                 },
-                child: Text("Return to home.")),
+                child: const Text("Return to home.")),
             Expanded(
               child: GestureDetector(
                   onTapDown: (_) => setState(() => userInteraction = true),
@@ -489,9 +489,9 @@ class _MessengerState extends State<Messenger> {
                               ? Alignment.centerRight
                               : Alignment.centerLeft,
                           child: Container(
-                            margin: EdgeInsets.symmetric(
+                            margin: const EdgeInsets.symmetric(
                                 vertical: 5, horizontal: 10),
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
                               color: isUserMessage
                                   ? Colors.blueAccent
@@ -525,13 +525,13 @@ class _MessengerState extends State<Messenger> {
                   setState(() {});
                   if (x == 0) {
                     convo.add(["They are texting rn", false]);
-                    Timer a = Timer(Duration(seconds: 3), () {
+                    Timer a = Timer(const Duration(seconds: 3), () {
                       convo.removeAt(convo.length - 1);
                       convo.add([response[rnd.nextInt(177)], false]);
                       scrollToBottom(userInteraction);
                       convo.add(["They are texting rn", false]);
                       setState(() {});
-                      Timer b = Timer(Duration(seconds: 6), () {
+                      Timer b = Timer(const Duration(seconds: 6), () {
                         convo.removeAt(convo.length - 1);
                         convo.add([longerTexts[rnd.nextInt(140)], false]);
                         scrollToBottom(userInteraction);
@@ -541,13 +541,13 @@ class _MessengerState extends State<Messenger> {
                     });
                   } else if (x == 1) {
                     convo.add(["They are texting rn", false]);
-                    Timer c = Timer(Duration(seconds: 3), () {
+                    Timer c = Timer(const Duration(seconds: 3), () {
                       convo.removeAt(convo.length - 1);
                       convo.add([response[rnd.nextInt(177)], false]);
                       scrollToBottom(userInteraction);
                       convo.add(["They are texting rn", false]);
                       setState(() {});
-                      Timer d = Timer(Duration(seconds: 3), () {
+                      Timer d = Timer(const Duration(seconds: 3), () {
                         convo.removeAt(convo.length - 1);
                         convo.add([questions[rnd.nextInt(87)], false]);
                         scrollToBottom(userInteraction);
@@ -557,19 +557,19 @@ class _MessengerState extends State<Messenger> {
                     });
                   } else {
                     convo.add(["They are texting rn", false]);
-                    Timer e = Timer(Duration(seconds: 3), () {
+                    Timer e = Timer(const Duration(seconds: 3), () {
                       convo.removeAt(convo.length - 1);
                       convo.add([response[rnd.nextInt(177)], false]);
                       scrollToBottom(userInteraction);
                       convo.add(["They are texting rn", false]);
                       setState(() {});
-                      Timer f = Timer(Duration(seconds: 6), () {
+                      Timer f = Timer(const Duration(seconds: 6), () {
                         convo.removeAt(convo.length - 1);
                         convo.add([longerTexts[rnd.nextInt(140)], false]);
                         scrollToBottom(userInteraction);
                         convo.add(["They are texting rn", false]);
                         setState(() {});
-                        Timer g = Timer(Duration(seconds: 3), () {
+                        Timer g = Timer(const Duration(seconds: 3), () {
                           convo.removeAt(convo.length - 1);
                           convo.add([questions[rnd.nextInt(87)], false]);
                           scrollToBottom(userInteraction);
@@ -580,7 +580,7 @@ class _MessengerState extends State<Messenger> {
                     });
                   }
                 },
-                child: Text("Send message"))
+                child: const Text("Send message"))
           ],
         ),
       ),
