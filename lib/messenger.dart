@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class Messenger extends StatefulWidget {
   const Messenger({super.key});
@@ -11,8 +12,46 @@ class Messenger extends StatefulWidget {
 }
 
 class _MessengerState extends State<Messenger> {
+  NativeAd? nativeAd = null;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print("I happened");
+
+    nativeAd = NativeAd(
+      customOptions: {},
+      adUnitId: "ca-app-pub-3940256099942544/1044960115",
+      factoryId: "listTile",
+      listener: NativeAdListener(
+        onAdLoaded: (ad) {
+          print("Ad loaded");
+          setState(() {
+            isLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          print("Ad failed to load $error");
+          ad.dispose();
+        },
+      ),
+      request: AdRequest(),
+    );
+    print(nativeAd);
+    if (nativeAd != null) {
+      print("I happened 2");
+      nativeAd?.load();
+    } else {
+      print("Ad is null");
+    }
+
+    //Big issues here
+    //Relevant video:  https://www.youtube.com/watch?v=GRPMf9JboxE
+  }
+
   Random rnd = Random();
   bool userInteraction = false;
+  bool isLoaded = false;
   List<String> questions = [
     "What’s ur fav way to spend a weekend?",
     "If u could travel anywhere, where would ya go?",
@@ -449,7 +488,6 @@ class _MessengerState extends State<Messenger> {
   }
 
   void scrollToBottom(bool userInteraction) {
-    print(userInteraction);
     if (userInteraction == false) {
       scrollController.animateTo(
         scrollController.position.maxScrollExtent,
@@ -465,6 +503,9 @@ class _MessengerState extends State<Messenger> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
+            isLoaded
+             ? Container(height: 200, child: AdWidget(ad: nativeAd!))
+             : Text("Ad is loading..."),
             const Text("Messenger App"),
             TextButton(
                 onPressed: () {
