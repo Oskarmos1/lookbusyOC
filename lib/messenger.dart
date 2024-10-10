@@ -12,22 +12,30 @@ class Messenger extends StatefulWidget {
 }
 
 class _MessengerState extends State<Messenger> {
-  NativeAd? nativeAd = null;
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     print("I happened");
 
+    //Big issues here
+    //Relevant video:  https://www.youtube.com/watch?v=GRPMf9JboxE
+  }
+
+  void newAd() {
+    NativeAd? nativeAd;
+    /*
+
+
+    */
+    //Actual ID ca-app-pub-7471100637488619/2641308578
     nativeAd = NativeAd(
       customOptions: {},
       adUnitId: "ca-app-pub-3940256099942544/1044960115",
       factoryId: "listTile",
       listener: NativeAdListener(
         onAdLoaded: (ad) {
-          print("Ad loaded");
           setState(() {
-            isLoaded = true;
+            convo.add([ad, false, true]);
           });
         },
         onAdFailedToLoad: (ad, error) {
@@ -37,21 +45,47 @@ class _MessengerState extends State<Messenger> {
       ),
       request: AdRequest(),
     );
+    /*
     print(nativeAd);
     if (nativeAd != null) {
       print("I happened 2");
-      nativeAd?.load();
+      nativeAd.load();
     } else {
       print("Ad is null");
     }
-
-    //Big issues here
-    //Relevant video:  https://www.youtube.com/watch?v=GRPMf9JboxE
+    */
+    nativeAd.load();
+    //nativeAd.load().then((value) {
+    //  setState(() {
+    //  convo.add([nativeAd, false, true]);
+    // });
+    // });
   }
 
   Random rnd = Random();
   bool userInteraction = false;
-  bool isLoaded = false;
+  List<String> videoPrompt = [
+    "Hey, we’ve got something cool for you—check out this video!",
+    "This one's just for you. Hit play and enjoy!",
+    "You’re going to love this video—give it a watch!",
+    "Take a break and watch this awesome video we’ve found for you.",
+    "We thought you’d enjoy this—tap to watch!",
+    "Here’s something fun for you to check out! Watch the video.",
+    "Got a minute? Watch this quick video we think you'll like.",
+    "Press play, you won’t want to miss this one!",
+    "We picked this video just for you—enjoy!",
+    "Feeling bored? Here’s a video to brighten your day.",
+    "We found a video that’s right up your alley. Take a look!",
+    "You deserve a break—sit back and watch this video.",
+    "Here’s something we think you’ll really enjoy. Watch now!",
+    "Ready for something cool? Check out this video.",
+    "We’ve got a surprise for you—watch this video!",
+    "Thought you might like this! Hit play and see for yourself.",
+    "This video is worth your time—trust us, watch it!",
+    "Need a little entertainment? Watch this video we found!",
+    "We found something amazing—tap to watch the video now!",
+    "Take a moment and enjoy this video we handpicked for you."
+  ];
   List<String> questions = [
     "What’s ur fav way to spend a weekend?",
     "If u could travel anywhere, where would ya go?",
@@ -465,8 +499,8 @@ class _MessengerState extends State<Messenger> {
     "When I have disagreements with friends, I try to communicate openly and find common ground. It’s all about understanding each other.",
     "The best piece of advice I’d give is to always follow your heart."
   ];
-  //true if the user said it, false if not
-  //[["Text", true]]
+  //true if the user said it, false if not; second bool is if it is an ad or not
+  //[["Text", true, false]]
   List<List<dynamic>> convo = [];
   String newText = "";
   TextEditingController textController = TextEditingController();
@@ -475,14 +509,26 @@ class _MessengerState extends State<Messenger> {
   @override
   void initState() {
     super.initState();
-    convo.add([longerTexts[rnd.nextInt(140)], false]);
-    convo.add([questions[rnd.nextInt(89)], false]);
+
+    //convo.add([longerTexts[rnd.nextInt(140)], false, false]);
+    //convo.add([questions[rnd.nextInt(89)], false, false]);
+    convo.add([videoPrompt[rnd.nextInt(18)], false, false]);
+    newAd();
+    Timer g = Timer(const Duration(seconds: 2), () {
+      convo.add([questions[rnd.nextInt(89)], false, false]);
+      setState(() {});
+    });
   }
 
   @override
   void dispose() {
     textController.dispose();
     scrollController.dispose();
+    for (int i = 0; i < convo.length; i++) {
+      if (convo[i][2] == true) {
+        convo[i][0].dispose();
+      }
+    }
     Timer.periodic(const Duration(seconds: 1), (timer) {});
     super.dispose();
   }
@@ -503,9 +549,6 @@ class _MessengerState extends State<Messenger> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            isLoaded
-             ? Container(height: 200, child: AdWidget(ad: nativeAd!))
-             : Text("Ad is loading..."),
             const Text("Messenger App"),
             TextButton(
                 onPressed: () {
@@ -523,31 +566,38 @@ class _MessengerState extends State<Messenger> {
                       itemCount: convo.length,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
-                        final isUserMessage =
-                            convo[index][1]; // true if user message
-                        return Align(
-                          alignment: isUserMessage
-                              ? Alignment.centerRight
-                              : Alignment.centerLeft,
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: isUserMessage
-                                  ? Colors.blueAccent
-                                  : Colors.grey[300],
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Text(
-                              convo[index][0],
-                              style: TextStyle(
-                                color:
-                                    isUserMessage ? Colors.white : Colors.black,
+                        final isUserMessage = convo[index][1];
+                        bool isAd = convo[index][2];
+                        if (isAd == false) {
+                          return Align(
+                            alignment: isUserMessage
+                                ? Alignment.centerRight
+                                : Alignment.centerLeft,
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 10),
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: isUserMessage
+                                    ? Colors.blueAccent
+                                    : Colors.grey[300],
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(
+                                convo[index][0],
+                                style: TextStyle(
+                                  color: isUserMessage
+                                      ? Colors.white
+                                      : Colors.black,
+                                ),
                               ),
                             ),
-                          ),
-                        );
+                          );
+                        } else {
+                          return Container(
+                              height: 200,
+                              child: AdWidget(ad: convo[index][0]));
+                        }
                       })),
             ),
             TextField(
@@ -559,64 +609,80 @@ class _MessengerState extends State<Messenger> {
             TextButton(
                 onPressed: () {
                   canBeExited = false;
-                  int x = rnd.nextInt(3);
-                  convo.add([newText, true]);
+                  int x = rnd.nextInt(4);
+                  convo.add([newText, true, false]);
                   textController.clear();
                   scrollToBottom(userInteraction);
                   setState(() {});
                   if (x == 0) {
-                    convo.add(["They are texting rn", false]);
+                    convo.add(["They are texting rn", false, false]);
                     Timer a = Timer(const Duration(seconds: 3), () {
                       convo.removeAt(convo.length - 1);
-                      convo.add([response[rnd.nextInt(177)], false]);
+                      convo.add([response[rnd.nextInt(177)], false, false]);
                       scrollToBottom(userInteraction);
-                      convo.add(["They are texting rn", false]);
+                      convo.add(["They are texting rn", false, false]);
                       setState(() {});
                       Timer b = Timer(const Duration(seconds: 6), () {
                         convo.removeAt(convo.length - 1);
-                        convo.add([longerTexts[rnd.nextInt(140)], false]);
+                        convo
+                            .add([longerTexts[rnd.nextInt(140)], false, false]);
                         scrollToBottom(userInteraction);
                         setState(() {});
                         canBeExited = true;
                       });
                     });
                   } else if (x == 1) {
-                    convo.add(["They are texting rn", false]);
+                    convo.add(["They are texting rn", false, false]);
                     Timer c = Timer(const Duration(seconds: 3), () {
                       convo.removeAt(convo.length - 1);
-                      convo.add([response[rnd.nextInt(177)], false]);
+                      convo.add([response[rnd.nextInt(177)], false, false]);
                       scrollToBottom(userInteraction);
-                      convo.add(["They are texting rn", false]);
+                      convo.add(["They are texting rn", false, false]);
                       setState(() {});
                       Timer d = Timer(const Duration(seconds: 3), () {
                         convo.removeAt(convo.length - 1);
-                        convo.add([questions[rnd.nextInt(87)], false]);
+                        convo.add([questions[rnd.nextInt(87)], false, false]);
                         scrollToBottom(userInteraction);
                         setState(() {});
                         canBeExited = true;
                       });
                     });
-                  } else {
-                    convo.add(["They are texting rn", false]);
+                  } else if (x == 2) {
+                    convo.add(["They are texting rn", false, false]);
                     Timer e = Timer(const Duration(seconds: 3), () {
                       convo.removeAt(convo.length - 1);
-                      convo.add([response[rnd.nextInt(177)], false]);
+                      convo.add([response[rnd.nextInt(177)], false, false]);
                       scrollToBottom(userInteraction);
-                      convo.add(["They are texting rn", false]);
+                      convo.add(["They are texting rn", false, false]);
                       setState(() {});
                       Timer f = Timer(const Duration(seconds: 6), () {
                         convo.removeAt(convo.length - 1);
-                        convo.add([longerTexts[rnd.nextInt(140)], false]);
+                        convo
+                            .add([longerTexts[rnd.nextInt(140)], false, false]);
                         scrollToBottom(userInteraction);
-                        convo.add(["They are texting rn", false]);
+                        convo.add(["They are texting rn", false, false]);
                         setState(() {});
                         Timer g = Timer(const Duration(seconds: 3), () {
                           convo.removeAt(convo.length - 1);
-                          convo.add([questions[rnd.nextInt(87)], false]);
+                          convo.add([questions[rnd.nextInt(87)], false, false]);
                           scrollToBottom(userInteraction);
                           setState(() {});
                           canBeExited = true;
                         });
+                      });
+                    });
+                  } else {
+                    convo.add(["They are texting rn", false, false]);
+                    Timer h = Timer(const Duration(seconds: 3), () async {
+                      convo.removeAt(convo.length - 1);
+                      convo.add([videoPrompt[rnd.nextInt(19)], false, false]);
+                      scrollToBottom(userInteraction);
+                      newAd();
+                      Timer i = Timer(const Duration(seconds: 3), () {
+                        convo.add([questions[rnd.nextInt(87)], false, false]);
+                        scrollToBottom(userInteraction);
+                        setState(() {});
+                        canBeExited = true;
                       });
                     });
                   }
