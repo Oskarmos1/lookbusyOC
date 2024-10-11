@@ -515,7 +515,7 @@ class _MessengerState extends State<Messenger> {
     convo.add([videoPrompt[rnd.nextInt(18)], false, false]);
     newAd();
     Timer g = Timer(const Duration(seconds: 2), () {
-      convo.add([questions[rnd.nextInt(89)], false, false]);
+      convo.add([questions[rnd.nextInt(80)], false, false]);
       setState(() {});
     });
   }
