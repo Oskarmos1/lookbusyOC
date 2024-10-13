@@ -5,6 +5,7 @@ import 'banking.dart';
 import 'home.dart';
 import 'mail.dart';
 import 'messenger.dart';
+import 'moneyExchange.dart';
 import 'phone.dart';
 
 void main() {
@@ -18,6 +19,7 @@ void main() {
       '/banking': (context) => const Banking(),
       '/mail': (context) => const Mail(),
       '/phone': (context) => const Phone(),
+      '/moneyExchange': (context) => const Moneyexchange(),
     },
   ));
 }
