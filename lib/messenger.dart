@@ -512,10 +512,10 @@ class _MessengerState extends State<Messenger> {
 
     //convo.add([longerTexts[rnd.nextInt(140)], false, false]);
     //convo.add([questions[rnd.nextInt(89)], false, false]);
-    convo.add([videoPrompt[rnd.nextInt(18)], false, false]);
+    convo.add([videoPrompt[rnd.nextInt(videoPrompt.length - 2)], false, false]);
     newAd();
     Timer g = Timer(const Duration(seconds: 2), () {
-      convo.add([questions[rnd.nextInt(80)], false, false]);
+      convo.add([questions[rnd.nextInt(questions.length - 2)], false, false]);
       setState(() {});
     });
   }
@@ -618,14 +618,21 @@ class _MessengerState extends State<Messenger> {
                     convo.add(["They are texting rn", false, false]);
                     Timer a = Timer(const Duration(seconds: 3), () {
                       convo.removeAt(convo.length - 1);
-                      convo.add([response[rnd.nextInt(177)], false, false]);
+                      convo.add([
+                        response[rnd.nextInt(response.length - 2)],
+                        false,
+                        false
+                      ]);
                       scrollToBottom(userInteraction);
                       convo.add(["They are texting rn", false, false]);
                       setState(() {});
                       Timer b = Timer(const Duration(seconds: 6), () {
                         convo.removeAt(convo.length - 1);
-                        convo
-                            .add([longerTexts[rnd.nextInt(140)], false, false]);
+                        convo.add([
+                          longerTexts[rnd.nextInt(longerTexts.length - 2)],
+                          false,
+                          false
+                        ]);
                         scrollToBottom(userInteraction);
                         setState(() {});
                         canBeExited = true;
@@ -635,13 +642,21 @@ class _MessengerState extends State<Messenger> {
                     convo.add(["They are texting rn", false, false]);
                     Timer c = Timer(const Duration(seconds: 3), () {
                       convo.removeAt(convo.length - 1);
-                      convo.add([response[rnd.nextInt(177)], false, false]);
+                      convo.add([
+                        response[rnd.nextInt(response.length - 2)],
+                        false,
+                        false
+                      ]);
                       scrollToBottom(userInteraction);
                       convo.add(["They are texting rn", false, false]);
                       setState(() {});
                       Timer d = Timer(const Duration(seconds: 3), () {
                         convo.removeAt(convo.length - 1);
-                        convo.add([questions[rnd.nextInt(87)], false, false]);
+                        convo.add([
+                          questions[rnd.nextInt(questions.length - 2)],
+                          false,
+                          false
+                        ]);
                         scrollToBottom(userInteraction);
                         setState(() {});
                         canBeExited = true;
@@ -651,20 +666,31 @@ class _MessengerState extends State<Messenger> {
                     convo.add(["They are texting rn", false, false]);
                     Timer e = Timer(const Duration(seconds: 3), () {
                       convo.removeAt(convo.length - 1);
-                      convo.add([response[rnd.nextInt(177)], false, false]);
+                      convo.add([
+                        response[rnd.nextInt(response.length - 2)],
+                        false,
+                        false
+                      ]);
                       scrollToBottom(userInteraction);
                       convo.add(["They are texting rn", false, false]);
                       setState(() {});
                       Timer f = Timer(const Duration(seconds: 6), () {
                         convo.removeAt(convo.length - 1);
-                        convo
-                            .add([longerTexts[rnd.nextInt(140)], false, false]);
+                        convo.add([
+                          longerTexts[rnd.nextInt(longerTexts.length - 2)],
+                          false,
+                          false
+                        ]);
                         scrollToBottom(userInteraction);
                         convo.add(["They are texting rn", false, false]);
                         setState(() {});
                         Timer g = Timer(const Duration(seconds: 3), () {
                           convo.removeAt(convo.length - 1);
-                          convo.add([questions[rnd.nextInt(87)], false, false]);
+                          convo.add([
+                            questions[rnd.nextInt(questions.length - 2)],
+                            false,
+                            false
+                          ]);
                           scrollToBottom(userInteraction);
                           setState(() {});
                           canBeExited = true;
@@ -675,11 +701,19 @@ class _MessengerState extends State<Messenger> {
                     convo.add(["They are texting rn", false, false]);
                     Timer h = Timer(const Duration(seconds: 3), () async {
                       convo.removeAt(convo.length - 1);
-                      convo.add([videoPrompt[rnd.nextInt(19)], false, false]);
+                      convo.add([
+                        videoPrompt[rnd.nextInt(videoPrompt.length - 2)],
+                        false,
+                        false
+                      ]);
                       scrollToBottom(userInteraction);
                       newAd();
                       Timer i = Timer(const Duration(seconds: 3), () {
-                        convo.add([questions[rnd.nextInt(87)], false, false]);
+                        convo.add([
+                          questions[rnd.nextInt(questions.length - 2)],
+                          false,
+                          false
+                        ]);
                         scrollToBottom(userInteraction);
                         setState(() {});
                         canBeExited = true;

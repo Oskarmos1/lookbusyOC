@@ -24,6 +24,12 @@ class _BankingState extends State<Banking> {
     Transaction(300, DateTime.now(), "Recieve money", "Fred")
   ];
   @override
+  void dispose() {
+    super.dispose();
+    scrollController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(

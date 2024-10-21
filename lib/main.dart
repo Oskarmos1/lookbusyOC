@@ -4,6 +4,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'banking.dart';
 import 'home.dart';
 import 'mail.dart';
+import 'mailDetail.dart';
 import 'messenger.dart';
 import 'moneyExchange.dart';
 import 'phone.dart';
@@ -20,6 +21,7 @@ void main() {
       '/mail': (context) => const Mail(),
       '/phone': (context) => const Phone(),
       '/moneyExchange': (context) => const Moneyexchange(),
+      '/mailDetail': (context) => const Maildetail(),
     },
   ));
 }
