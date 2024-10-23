@@ -26,6 +26,8 @@ void main() {
   ));
 }
 
+//To open xml file open the android studio via android directory.
+
 
 // git add .
 // git commit -m "commit message"

@@ -12,31 +12,98 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-      child: Column(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          TextButton(
-            child: const Text("Fake Banking App"),
-            onPressed: () {
-              Navigator.pushNamed(context, '/banking');
-            },
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/banking');
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                              "assets/BankingIcon.png"), // Banking image
+                        ),
+                      ),
+                      child: Center(
+                          child: Text("",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20))),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/messenger');
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                              "assets/MessengerIcon.png"), // Messenger image
+                        ),
+                      ),
+                      child: Center(
+                          child: Text("",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20))),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          TextButton(
-            child: const Text("Fake Messenger"),
-            onPressed: () {
-              Navigator.pushNamed(context, '/messenger');
-            },
-          ),
-          TextButton(
-            child: const Text("Fake Mail"),
-            onPressed: () {
-              Navigator.pushNamed(context, '/mail');
-            },
-          ),
-          TextButton(
-            child: const Text("Fake Phone Call"),
-            onPressed: () {
-              Navigator.pushNamed(context, '/phone');
-            },
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/mail');
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image:
+                              AssetImage("assets/EmailIcon.png"), // Mail image
+                        ),
+                      ),
+                      child: Center(
+                          child: Text("",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20))),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/phone');
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image:
+                              AssetImage("assets/PhoneIcon.png"), // Phone image
+                        ),
+                      ),
+                      child: Center(
+                          child: Text("",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20))),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class Messenger extends StatefulWidget {
   const Messenger({super.key});
@@ -23,11 +24,10 @@ class _MessengerState extends State<Messenger> {
 
   void newAd() {
     NativeAd? nativeAd;
-    /*
+    //Test ID = ca-app-pub-3940256099942544/1044960115
+    //Actual ID = ca-app-pub-7471100637488619/2641308578
 
-
-    */
-    //Actual ID ca-app-pub-7471100637488619/2641308578
+    //There are no issues with it they just want the actual ID when it is time to launch
     nativeAd = NativeAd(
       customOptions: {},
       adUnitId: "ca-app-pub-3940256099942544/1044960115",
@@ -45,21 +45,7 @@ class _MessengerState extends State<Messenger> {
       ),
       request: AdRequest(),
     );
-    /*
-    print(nativeAd);
-    if (nativeAd != null) {
-      print("I happened 2");
-      nativeAd.load();
-    } else {
-      print("Ad is null");
-    }
-    */
     nativeAd.load();
-    //nativeAd.load().then((value) {
-    //  setState(() {
-    //  convo.add([nativeAd, false, true]);
-    // });
-    // });
   }
 
   Random rnd = Random();
@@ -549,14 +535,30 @@ class _MessengerState extends State<Messenger> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            const Text("Messenger App"),
-            TextButton(
-                onPressed: () {
-                  if (canBeExited == true && mounted) {
-                    Navigator.pop(context);
-                  }
-                },
-                child: const Text("Return to home.")),
+            Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      if (canBeExited == true && mounted) {
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: const HugeIcon(
+                      icon: HugeIcons.strokeRoundedArrowLeft02,
+                      color: Color(0xFF263238),
+                      size: 40.0,
+                    ),
+                  ),
+                  Expanded(
+                    child: Image(
+                      image: const AssetImage("assets/BusyMessage.png"),
+                      height: 100, // You can adjust the height as needed
+                      fit: BoxFit
+                          .contain, // Adjust the fit property to control how the image scales
+                    ),
+                  ),
+                ]),
             Expanded(
               child: GestureDetector(
                   onTapDown: (_) => setState(() => userInteraction = true),

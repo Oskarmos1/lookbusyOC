@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:vibration/vibration.dart';
 
 class Phone extends StatefulWidget {
   const Phone({super.key});
@@ -33,14 +32,16 @@ class _PhoneState extends State<Phone> {
       Clipboard.setData(ClipboardData(text: ''));
       for (int i = 0; i < 10; i++) {
         timers.add(Timer(Duration(seconds: i * 4), () {
-          Vibration.vibrate(amplitude: 250, duration: 1000);
+          //Vibration.vibrate(amplitude: 250, duration: 1000);
         }));
       }
       Timer(Duration(seconds: 40), () {
-        setState(() {
-          preCallOpacity = 0.0;
-          postCallOpacity = 1.0;
-        });
+        if (mounted) {
+          setState(() {
+            preCallOpacity = 0.0;
+            postCallOpacity = 1.0;
+          });
+        }
       });
     }
     return Scaffold(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class Transaction {
   DateTime timeOfTransaction;
@@ -35,12 +36,28 @@ class _BankingState extends State<Banking> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            const Text("Banking App"),
-            TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("Return to home.")),
+            Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const HugeIcon(
+                      icon: HugeIcons.strokeRoundedArrowLeft02,
+                      color: Color(0xFF263238),
+                      size: 40.0,
+                    ),
+                  ),
+                  Expanded(
+                    child: Image(
+                      image: const AssetImage("assets/BusyBank.png"),
+                      height: 100, // You can adjust the height as needed
+                      fit: BoxFit
+                          .contain, // Adjust the fit property to control how the image scales
+                    ),
+                  ),
+                ]),
             Text("£${num.parse(money.toStringAsFixed(2))}"),
             TextButton(
                 onPressed: () async {
