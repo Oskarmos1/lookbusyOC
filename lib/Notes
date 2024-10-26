@@ -1,4 +1,92 @@
-Background: #eceff1
-Any text will be written in: #263238
-Miscallaneous Background: #cfd8dc
-Thin borders: #90a4ae
+
+Top bar will have text in white surrounded by its respective color
+
+Main Screen:
+Blackish with color integrated
+//Proper Background = 000000
+//Layer 1 = 111110
+//Layer 2 = 2A2A2A
+//Layer 3 = 444443
+//On interaction = 91918F 
+
+Banking App:
+Serious Blue
+//Proper Background = cfd8dc
+//Sent Background =  b0bec5 --Sending background should be light recieving background should be dark
+//Sent Text = 263238 
+//Recieved Background = 546e7a
+//Recieved Text = eceff1
+//All other text = 37474f
+//On interaction = b0bec5
+//Top bar = 607d8b
+//Icon = 607d8b
+
+Messenger:
+Purple
+//Proper Background = 2b1e25
+//Sent Background = BF94BC
+//Sent Text = d2b0d0
+//Recieved Background = ae58af
+//Recieved Text = d2b0d0
+//On interaction = d2b0d0
+//Top bar = ae58af
+//Icon = ae58af
+
+Phone Call:
+Green
+//Background = 030B07
+//Button Off = Black
+//button on = white
+// Phone Call Icon = = 1b663e
+
+Mail:  
+Red
+//Email Background = ffd6d6
+//Email Text = 91918F
+//Email On Interaction = ffd6d6
+//Email Top Bar = ff2424
+//Email Icon = ff2424
+
+------------------------------------------------------------------------------------------------------
+Main Screen (Blackish with Color Integrated)
+Proper Background = #000000 → 255, 0, 0, 0
+Layer 1 = #111110 → 255, 17, 17, 16
+Layer 2 = #2A2A2A → 255, 42, 42, 42
+Layer 3 = #444443 → 255, 68, 68, 67
+On interaction = #91918F → 255, 145, 145, 143
+
+Banking App (Serious Blue)
+Proper Background = #CFD8DC → 255, 207, 216, 220
+Sent Background = #B0BEC5 → 255, 176, 190, 197
+Sent Text = #263238 → 255, 38, 50, 56
+Received Background = #546E7A → 255, 84, 110, 122
+Received Text = #ECEFF1 → 255, 236, 239, 241
+All other text = #37474F → 255, 55, 71, 79
+On interaction = #B0BEC5 → 255, 176, 190, 197
+Top bar = #607D8B → 255, 96, 125, 139
+Icon = #607D8B → 255, 96, 125, 139
+
+Messenger (Purple)
+Proper Background = #2B1E25 → 255, 43, 30, 37
+Sent Background = #BF94BC → 255, 191, 148, 188
+Sent Text = #D2B0D0 → 255, 210, 176, 208
+Received Background = #AE58AF → 255, 174, 88, 175
+Received Text = #D2B0D0 → 255, 210, 176, 208
+On interaction = #D2B0D0 → 255, 210, 176, 208
+Top bar = #AE58AF → 255, 174, 88, 175
+Icon = #AE58AF → 255, 174, 88, 175
+
+
+Phone Call (Green)
+Background = #030B07 → 255, 3, 11, 7
+Button Off = #000000 → 255, 0, 0, 0
+Button On = #FFFFFF → 255, 255, 255, 255
+Phone Call Icon = #1B663E → 255, 27, 102, 62
+
+
+Mail (Red)
+Email Background = #FFD6D6 → 255, 255, 214, 214
+Email Text = #91918F → 255, 145, 145, 143
+Email On Interaction = #FFD6D6 → 255, 255, 214, 214
+Email Top Bar = #FF2424 → 255, 255, 36, 36
+Email Icon = #FF2424 → 255, 255, 36, 36

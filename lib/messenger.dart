@@ -498,11 +498,14 @@ class _MessengerState extends State<Messenger> {
 
     //convo.add([longerTexts[rnd.nextInt(140)], false, false]);
     //convo.add([questions[rnd.nextInt(89)], false, false]);
+
     convo.add([videoPrompt[rnd.nextInt(videoPrompt.length - 2)], false, false]);
     newAd();
     Timer g = Timer(const Duration(seconds: 2), () {
-      convo.add([questions[rnd.nextInt(questions.length - 2)], false, false]);
-      setState(() {});
+      if (mounted) {
+        convo.add([questions[rnd.nextInt(questions.length - 2)], false, false]);
+        setState(() {});
+      }
     });
   }
 
@@ -548,14 +551,6 @@ class _MessengerState extends State<Messenger> {
                       icon: HugeIcons.strokeRoundedArrowLeft02,
                       color: Color(0xFF263238),
                       size: 40.0,
-                    ),
-                  ),
-                  Expanded(
-                    child: Image(
-                      image: const AssetImage("assets/BusyMessage.png"),
-                      height: 100, // You can adjust the height as needed
-                      fit: BoxFit
-                          .contain, // Adjust the fit property to control how the image scales
                     ),
                   ),
                 ]),
