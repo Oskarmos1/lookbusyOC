@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lookbusy/emails.dart';
 import 'package:vibration/vibration.dart';
 
 class Phone extends StatefulWidget {
@@ -22,6 +24,7 @@ class _PhoneState extends State<Phone> {
   Timer? callTimer;
   int callDuration = 0;
   bool started = true;
+  String randomName = "Contact Name";
   @override
   void dispose() {
     super.dispose();
@@ -33,6 +36,8 @@ class _PhoneState extends State<Phone> {
   @override
   Widget build(BuildContext context) {
     if (started == true) {
+      Random rnd = new Random();
+      randomName = MyMails.names[rnd.nextInt(MyMails.names.length - 1)];
       started = false;
       Clipboard.setData(ClipboardData(text: ''));
       for (int i = 0; i < 10; i++) {
@@ -67,9 +72,9 @@ class _PhoneState extends State<Phone> {
                     Padding(
                       padding: const EdgeInsets.only(top: 50.0),
                       child: Column(
-                        children: const [
+                        children: [
                           Text(
-                            "John Appleseed",
+                            randomName,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 30,
@@ -130,8 +135,8 @@ class _PhoneState extends State<Phone> {
                   // Call duration and caller info at the top
                   Column(
                     children: [
-                      const Text(
-                        "John Appleseed",
+                      Text(
+                        randomName,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 30,

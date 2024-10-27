@@ -76,7 +76,7 @@ class _MailState extends State<Mail> {
         backgroundColor: const Color(0xFFFF2424), // Email Top Bar
         iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
-          'Emails',
+          'Busy Mail',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,

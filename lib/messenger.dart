@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_typing_indicator/flutter_typing_indicator.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:hugeicons/hugeicons.dart';
+
+import 'emails.dart';
 
 class Messenger extends StatefulWidget {
   const Messenger({super.key});
@@ -17,17 +19,10 @@ class _MessengerState extends State<Messenger> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     print("I happened");
-
-    //Big issues here
-    //Relevant video:  https://www.youtube.com/watch?v=GRPMf9JboxE
   }
 
   void newAd() {
     NativeAd? nativeAd;
-    //Test ID = ca-app-pub-3940256099942544/1044960115
-    //Actual ID = ca-app-pub-7471100637488619/2641308578
-
-    //There are no issues with it they just want the actual ID when it is time to launch
     nativeAd = NativeAd(
       customOptions: {},
       adUnitId: "ca-app-pub-3940256099942544/1044960115",
@@ -50,6 +45,8 @@ class _MessengerState extends State<Messenger> {
 
   Random rnd = Random();
   bool userInteraction = false;
+  List<List<dynamic>> convo = [];
+  String randomName = "Contact Name";
   List<String> videoPrompt = [
     "Hey, we’ve got something cool for you—check out this video!",
     "This one's just for you. Hit play and enjoy!",
@@ -485,9 +482,6 @@ class _MessengerState extends State<Messenger> {
     "When I have disagreements with friends, I try to communicate openly and find common ground. It’s all about understanding each other.",
     "The best piece of advice I’d give is to always follow your heart."
   ];
-  //true if the user said it, false if not; second bool is if it is an ad or not
-  //[["Text", true, false]]
-  List<List<dynamic>> convo = [];
   String newText = "";
   TextEditingController textController = TextEditingController();
   ScrollController scrollController = ScrollController();
@@ -496,17 +490,13 @@ class _MessengerState extends State<Messenger> {
   void initState() {
     super.initState();
 
-    //convo.add([longerTexts[rnd.nextInt(140)], false, false]);
-    //convo.add([questions[rnd.nextInt(89)], false, false]);
-
-    convo.add([videoPrompt[rnd.nextInt(videoPrompt.length - 2)], false, false]);
-    newAd();
-    Timer g = Timer(const Duration(seconds: 2), () {
-      if (mounted) {
-        convo.add([questions[rnd.nextInt(questions.length - 2)], false, false]);
-        setState(() {});
+    if (mounted) {
+      if (MyMails.names.isNotEmpty) {
+        randomName = MyMails.names[rnd.nextInt(MyMails.names.length - 1)];
       }
-    });
+      convo.add([questions[rnd.nextInt(questions.length - 2)], false, false]);
+      setState(() {});
+    }
   }
 
   @override
@@ -535,190 +525,296 @@ class _MessengerState extends State<Messenger> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor:
+            const Color.fromARGB(255, 174, 88, 175), // Email Top Bar
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: Text(
+          randomName,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
+        ),
+      ),
+      backgroundColor: const Color.fromARGB(255, 210, 176, 208),
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      if (canBeExited == true && mounted) {
-                        Navigator.pop(context);
-                      }
-                    },
-                    child: const HugeIcon(
-                      icon: HugeIcons.strokeRoundedArrowLeft02,
-                      color: Color(0xFF263238),
-                      size: 40.0,
-                    ),
-                  ),
-                ]),
             Expanded(
               child: GestureDetector(
-                  onTapDown: (_) => setState(() => userInteraction = true),
-                  onTapUp: (_) => setState(() => userInteraction = false),
-                  child: ListView.builder(
-                      controller: scrollController,
-                      itemCount: convo.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        final isUserMessage = convo[index][1];
-                        bool isAd = convo[index][2];
-                        if (isAd == false) {
-                          return Align(
-                            alignment: isUserMessage
-                                ? Alignment.centerRight
-                                : Alignment.centerLeft,
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 10),
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
+                onTapDown: (_) => setState(() => userInteraction = true),
+                onTapUp: (_) => setState(() => userInteraction = false),
+                child: ListView.builder(
+                  controller: scrollController,
+                  itemCount: convo.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    final isUserMessage = convo[index][1];
+                    bool isAd = convo[index][2];
+                    if (isAd == false) {
+                      if (convo[index][0].runtimeType == String) {
+                        return Align(
+                          alignment: isUserMessage
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft,
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: isUserMessage
+                                  ? const Color.fromARGB(
+                                      255, 191, 148, 188) // Sent background
+                                  : const Color.fromARGB(
+                                      255, 96, 59, 97), // Received background
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Text(
+                              convo[index][0],
+                              style: TextStyle(
                                 color: isUserMessage
-                                    ? Colors.blueAccent
-                                    : Colors.grey[300],
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Text(
-                                convo[index][0],
-                                style: TextStyle(
-                                  color: isUserMessage
-                                      ? Colors.white
-                                      : Colors.black,
-                                ),
+                                    ? const Color.fromARGB(
+                                        255, 43, 30, 37) // Sent text color
+                                    : const Color.fromARGB(255, 210, 176,
+                                        208), // Received text color
                               ),
                             ),
-                          );
-                        } else {
-                          return Container(
-                              height: 200,
-                              child: AdWidget(ad: convo[index][0]));
-                        }
-                      })),
+                          ),
+                        );
+                      } else {
+                        return Align(
+                          alignment: isUserMessage
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft,
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: isUserMessage
+                                  ? const Color.fromARGB(
+                                      255, 191, 148, 188) // Sent background
+                                  : const Color.fromARGB(
+                                      255, 96, 59, 97), // Received background
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: convo[index][0],
+                          ),
+                        );
+                      }
+                    } else {
+                      return Container(
+                          height: 200, child: AdWidget(ad: convo[index][0]));
+                    }
+                  },
+                ),
+              ),
             ),
-            TextField(
-              controller: textController,
-              onChanged: (String val) {
-                newText = val;
-              },
-            ),
-            TextButton(
-                onPressed: () {
-                  canBeExited = false;
-                  int x = rnd.nextInt(4);
-                  convo.add([newText, true, false]);
-                  textController.clear();
-                  scrollToBottom(userInteraction);
-                  setState(() {});
-                  if (x == 0) {
-                    convo.add(["They are texting rn", false, false]);
-                    Timer a = Timer(const Duration(seconds: 3), () {
-                      convo.removeAt(convo.length - 1);
-                      convo.add([
-                        response[rnd.nextInt(response.length - 2)],
-                        false,
-                        false
-                      ]);
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: textController,
+                      style: const TextStyle(color: Color(0xFF2B1E25)),
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xFFAE58AF), // Proper background color
+                        hintText: "Type a message",
+                        hintStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                      onChanged: (String val) {
+                        newText = val;
+                      },
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(right: 8.0),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFAE58AF), // Top bar and icon color
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    icon: const Icon(Icons.send, color: Colors.white),
+                    onPressed: () {
+                      canBeExited = false;
+                      int x = rnd.nextInt(4);
+                      convo.add([newText, true, false]);
+                      textController.clear();
                       scrollToBottom(userInteraction);
-                      convo.add(["They are texting rn", false, false]);
                       setState(() {});
-                      Timer b = Timer(const Duration(seconds: 6), () {
-                        convo.removeAt(convo.length - 1);
+
+                      if (x == 0) {
                         convo.add([
-                          longerTexts[rnd.nextInt(longerTexts.length - 2)],
+                          TypingIndicator(
+                              backgroundColor: Color.fromARGB(255, 96, 59, 97),
+                              dotColor: Color.fromARGB(255, 210, 176, 208)),
                           false,
                           false
                         ]);
-                        scrollToBottom(userInteraction);
-                        setState(() {});
-                        canBeExited = true;
-                      });
-                    });
-                  } else if (x == 1) {
-                    convo.add(["They are texting rn", false, false]);
-                    Timer c = Timer(const Duration(seconds: 3), () {
-                      convo.removeAt(convo.length - 1);
-                      convo.add([
-                        response[rnd.nextInt(response.length - 2)],
-                        false,
-                        false
-                      ]);
-                      scrollToBottom(userInteraction);
-                      convo.add(["They are texting rn", false, false]);
-                      setState(() {});
-                      Timer d = Timer(const Duration(seconds: 3), () {
-                        convo.removeAt(convo.length - 1);
-                        convo.add([
-                          questions[rnd.nextInt(questions.length - 2)],
-                          false,
-                          false
-                        ]);
-                        scrollToBottom(userInteraction);
-                        setState(() {});
-                        canBeExited = true;
-                      });
-                    });
-                  } else if (x == 2) {
-                    convo.add(["They are texting rn", false, false]);
-                    Timer e = Timer(const Duration(seconds: 3), () {
-                      convo.removeAt(convo.length - 1);
-                      convo.add([
-                        response[rnd.nextInt(response.length - 2)],
-                        false,
-                        false
-                      ]);
-                      scrollToBottom(userInteraction);
-                      convo.add(["They are texting rn", false, false]);
-                      setState(() {});
-                      Timer f = Timer(const Duration(seconds: 6), () {
-                        convo.removeAt(convo.length - 1);
-                        convo.add([
-                          longerTexts[rnd.nextInt(longerTexts.length - 2)],
-                          false,
-                          false
-                        ]);
-                        scrollToBottom(userInteraction);
-                        convo.add(["They are texting rn", false, false]);
-                        setState(() {});
-                        Timer g = Timer(const Duration(seconds: 3), () {
-                          convo.removeAt(convo.length - 1);
+                        Timer(const Duration(seconds: 3), () {
+                          convo.removeLast();
                           convo.add([
-                            questions[rnd.nextInt(questions.length - 2)],
+                            response[rnd.nextInt(response.length - 2)],
                             false,
                             false
                           ]);
                           scrollToBottom(userInteraction);
+                          convo.add([
+                            TypingIndicator(
+                                backgroundColor:
+                                    Color.fromARGB(255, 96, 59, 97),
+                                dotColor: Color.fromARGB(255, 210, 176, 208)),
+                            false,
+                            false
+                          ]);
                           setState(() {});
-                          canBeExited = true;
+                          Timer(const Duration(seconds: 6), () {
+                            convo.removeLast();
+                            convo.add([
+                              longerTexts[rnd.nextInt(longerTexts.length - 2)],
+                              false,
+                              false
+                            ]);
+                            scrollToBottom(userInteraction);
+                            setState(() {});
+                            canBeExited = true;
+                          });
                         });
-                      });
-                    });
-                  } else {
-                    convo.add(["They are texting rn", false, false]);
-                    Timer h = Timer(const Duration(seconds: 3), () async {
-                      convo.removeAt(convo.length - 1);
-                      convo.add([
-                        videoPrompt[rnd.nextInt(videoPrompt.length - 2)],
-                        false,
-                        false
-                      ]);
-                      scrollToBottom(userInteraction);
-                      newAd();
-                      Timer i = Timer(const Duration(seconds: 3), () {
+                      } else if (x == 1) {
                         convo.add([
-                          questions[rnd.nextInt(questions.length - 2)],
+                          TypingIndicator(
+                              backgroundColor: Color.fromARGB(255, 96, 59, 97),
+                              dotColor: Color.fromARGB(255, 210, 176, 208)),
                           false,
                           false
                         ]);
-                        scrollToBottom(userInteraction);
-                        setState(() {});
-                        canBeExited = true;
-                      });
-                    });
-                  }
-                },
-                child: const Text("Send message"))
+                        Timer(const Duration(seconds: 3), () {
+                          convo.removeLast();
+                          convo.add([
+                            response[rnd.nextInt(response.length - 2)],
+                            false,
+                            false
+                          ]);
+                          scrollToBottom(userInteraction);
+                          convo.add([
+                            TypingIndicator(
+                                backgroundColor:
+                                    Color.fromARGB(255, 96, 59, 97),
+                                dotColor: Color.fromARGB(255, 210, 176, 208)),
+                            false,
+                            false
+                          ]);
+                          setState(() {});
+                          Timer(const Duration(seconds: 3), () {
+                            convo.removeLast();
+                            convo.add([
+                              questions[rnd.nextInt(questions.length - 2)],
+                              false,
+                              false
+                            ]);
+                            scrollToBottom(userInteraction);
+                            setState(() {});
+                            canBeExited = true;
+                          });
+                        });
+                      } else if (x == 2) {
+                        convo.add([
+                          TypingIndicator(
+                              backgroundColor: Color.fromARGB(255, 96, 59, 97),
+                              dotColor: Color.fromARGB(255, 210, 176, 208)),
+                          false,
+                          false
+                        ]);
+                        Timer(const Duration(seconds: 3), () {
+                          convo.removeLast();
+                          convo.add([
+                            response[rnd.nextInt(response.length - 2)],
+                            false,
+                            false
+                          ]);
+                          scrollToBottom(userInteraction);
+                          convo.add([
+                            TypingIndicator(
+                                backgroundColor:
+                                    Color.fromARGB(255, 96, 59, 97),
+                                dotColor: Color.fromARGB(255, 210, 176, 208)),
+                            false,
+                            false
+                          ]);
+                          setState(() {});
+                          Timer(const Duration(seconds: 6), () {
+                            convo.removeLast();
+                            convo.add([
+                              longerTexts[rnd.nextInt(longerTexts.length - 2)],
+                              false,
+                              false
+                            ]);
+                            scrollToBottom(userInteraction);
+                            convo.add([
+                              TypingIndicator(
+                                  backgroundColor:
+                                      Color.fromARGB(255, 96, 59, 97),
+                                  dotColor: Color.fromARGB(255, 210, 176, 208)),
+                              false,
+                              false
+                            ]);
+                            setState(() {});
+                            Timer(const Duration(seconds: 3), () {
+                              convo.removeLast();
+                              convo.add([
+                                questions[rnd.nextInt(questions.length - 2)],
+                                false,
+                                false
+                              ]);
+                              scrollToBottom(userInteraction);
+                              setState(() {});
+                              canBeExited = true;
+                            });
+                          });
+                        });
+                      } else {
+                        convo.add([
+                          TypingIndicator(
+                              backgroundColor: Color.fromARGB(255, 96, 59, 97),
+                              dotColor: Color.fromARGB(255, 210, 176, 208)),
+                          false,
+                          false
+                        ]);
+                        Timer(const Duration(seconds: 3), () async {
+                          convo.removeLast();
+                          convo.add([
+                            videoPrompt[rnd.nextInt(videoPrompt.length - 2)],
+                            false,
+                            false
+                          ]);
+                          scrollToBottom(userInteraction);
+                          newAd();
+                          Timer(const Duration(seconds: 3), () {
+                            convo.add([
+                              questions[rnd.nextInt(questions.length - 2)],
+                              false,
+                              false
+                            ]);
+                            scrollToBottom(userInteraction);
+                            setState(() {});
+                            canBeExited = true;
+                          });
+                        });
+                      }
+                    },
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),
