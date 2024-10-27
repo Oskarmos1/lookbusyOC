@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.gms.ads.nativead.NativeAdView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:rotation="-360"
     android:rotationX="-360"
     android:rotationY="-360"
     >
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
         >
         <!--Ad icon -->
@@ -25,66 +25,65 @@
         <!--Frame layout with linear layout -->
         <!--android:layout_width="match_parent" should be in the second linear layout-->
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="199dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="100">
 
             <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="50"
-            android:layout_height="wrap_content"
-                android:background="#cfd8dc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-            android:orientation="vertical">
+                android:background="#603B61"
+
+                android:orientation="vertical">
 
 
-            <!--This is the video height was 200dp-->
-            <com.google.android.gms.ads.nativead.MediaView
-                android:id="@+id/native_ad_media"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                ></com.google.android.gms.ads.nativead.MediaView>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:orientation="horizontal">
-                <!--This is the icon-->
-                <ImageView
-                    android:id="@+id/native_ad_icon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"></ImageView>
+                <!--This is the video height was 200dp-->
+                <com.google.android.gms.ads.nativead.MediaView
+                    android:id="@+id/native_ad_media"
+                    android:layout_width="200dp"
+                    android:layout_height="120dp"></com.google.android.gms.ads.nativead.MediaView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="30dp"
                     android:orientation="horizontal">
-                    <!--Headline-->
-                    <TextView
-                        android:id="@+id/native_ad_headline"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:maxLines="1"
-                        android:textColor="#263238"
-                        android:textSize="16sp"
-                        tools:text="Headline" />
-                    <!--Body-->
-                    <TextView
-                        android:id="@+id/native_ad_body"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:maxLines="1"
-                        android:textColor="#667dab"
-                        android:textSize="14sp"
-                        tools:text="body" />
+                    <!--This is the icon-->
+                    <ImageView
+                        android:id="@+id/native_ad_icon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"></ImageView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <!--Headline-->
+                        <TextView
+                            android:id="@+id/native_ad_headline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:maxLines="1"
+                            android:textColor="#d2b0d0"
+                            android:textSize="16sp"
+                            tools:text="Headline" />
+                        <!--Body-->
+                        <TextView
+                            android:id="@+id/native_ad_body"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:maxLines="1"
+                            android:textColor="#d2b0d0"
+                            android:textSize="14sp"
+                            tools:text="body" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
         </LinearLayout>
     </FrameLayout>
 

@@ -26,7 +26,7 @@ class _MaildetailState extends State<Maildetail> {
           },
         ),
         title: const Text(
-          'Mail Detail',
+          'Busy Mail',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,

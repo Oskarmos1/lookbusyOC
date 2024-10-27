@@ -14,14 +14,18 @@ bool isLoadingMore = false;
 
 class _MailState extends State<Mail> {
   ScrollController scrollController = ScrollController();
-  Random rnd = Random();
+  Random rnd = new Random();
   bool started = true;
   List<String> outputMails = [];
   List<int> mailIndex = [];
-
+  int mailCount = 0;
   @override
   void initState() {
     super.initState();
+    mailCount = rnd.nextInt(4000) + 2000;
+    if (mounted) {
+      setState(() {});
+    }
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
               scrollController.position.maxScrollExtent - 10 &&
@@ -64,7 +68,6 @@ class _MailState extends State<Mail> {
 
   @override
   Widget build(BuildContext context) {
-    Random rnd = new Random();
     if (started == true) {
       started = false;
       double screenWidth = MediaQuery.of(context).size.width;
@@ -89,7 +92,7 @@ class _MailState extends State<Mail> {
           children: <Widget>[
             const SizedBox(height: 10),
             Text(
-              'Inbox: ${rnd.nextInt(4000) + 2000}',
+              'Inbox: $mailCount',
               style: const TextStyle(
                 color: Color(0xFF91918F), // Email Text
                 fontSize: 18,
