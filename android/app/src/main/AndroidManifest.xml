@@ -4,7 +4,7 @@
     <application
         android:label="lookbusy"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/lookbusyicon">
         <!-- TODO CHANGE THIS -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
